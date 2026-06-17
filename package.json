@@ -1,0 +1,13 @@
+{
+  "name": "logirush",
+  "version": "1.0.0",
+  "description": "LogiRush: Warehouse Expedition Simulator — game edukasi simulasi logistik & ekspedisi dengan Multi-FSM (vanilla JS).",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 5500",
+    "serve": "npx --yes serve -l 5500 .",
+    "test": "node docs/smoke-test.mjs"
+  },
+  "keywords": ["game", "education", "simulation", "logistics", "fsm", "vanilla-js"],
+  "license": "MIT"
+}
