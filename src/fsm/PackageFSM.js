@@ -1,7 +1,7 @@
 // ============================================================================
 // PackageFSM.js — FSM Paket (GDD 7.1)
 // Created → Waiting Scan → Scanned → Sorting → Sorted → Packing →
-// Quality Check → Ready to Load → Loaded → Shipping → Delivered/Late/Damaged/Failed
+// Quality Check → Ready to Load → Loaded → Stored → Shipping → Delivered/Late/Damaged/Failed
 //
 // Aksi player MEMULAI proses (scan/sort/pack/load); proses bertimer dijalankan
 // di onUpdate dan otomatis transisi saat selesai. QC otomatis menilai damage.
@@ -23,6 +23,7 @@ export const PKG_STATE_LABEL = {
   quality_check: 'Quality Check',
   ready_to_load: 'Ready to Load',
   loaded: 'Loaded',
+  stored: 'Stored in Vehicle',
   shipping: 'Shipping',
   delivered: 'Delivered',
   late: 'Late',
@@ -126,8 +127,13 @@ export function createPackageFSM(pkg, game) {
     },
 
     loaded: {
+      transitions: ['stored', 'failed'],
+      // paket dimuat ke kendaraan, menunggu kendaraan dispatch
+    },
+
+    stored: {
       transitions: ['shipping', 'failed'],
-      // menunggu kendaraan berangkat (VehicleFSM emit vehicle_departed)
+      // paket tersimpan di kendaraan, menunggu kendaraan berangkat (VehicleFSM emit vehicle_departed)
     },
 
     shipping: {

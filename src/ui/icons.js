@@ -61,12 +61,13 @@ const I = {
 // Logo lockup untuk Main Menu / header
 export const LOGO_SVG = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <rect x="4" y="6" width="56" height="52" rx="10" fill="url(#lg)"/>
-  <path d="M14 40l18-9 18 9-18 9-18-9z" fill="#0c1322" opacity=".35"/>
-  <path d="M32 14l16 8-16 8-16-8 16-8z" fill="#ffd166"/>
-  <path d="M16 22v12l16 8V30L16 22z" fill="#ff7a45"/>
-  <path d="M48 22v12l-16 8V30l16-8z" fill="#4f8cff"/>
+  <rect x="4" y="6" width="56" height="52" rx="10" fill="none" stroke="#e0a43b" stroke-opacity=".5" stroke-width="1.5"/>
+  <path d="M14 40l18-9 18 9-18 9-18-9z" fill="#150f09" opacity=".4"/>
+  <path d="M32 14l16 8-16 8-16-8 16-8z" fill="#e0a43b"/>
+  <path d="M16 22v12l16 8V30L16 22z" fill="#e07a3c"/>
+  <path d="M48 22v12l-16 8V30l16-8z" fill="#4ea7a0"/>
   <defs><linearGradient id="lg" x1="4" y1="6" x2="60" y2="58" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#1b2740"/><stop offset="1" stop-color="#0c1322"/></linearGradient></defs>
+    <stop stop-color="#3d2f1f"/><stop offset="1" stop-color="#1b1610"/></linearGradient></defs>
 </svg>`;
 
 /** Ambil markup SVG ikon. name -> string SVG (atau ikon box bila tak ada). */

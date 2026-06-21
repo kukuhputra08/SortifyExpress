@@ -1,7 +1,7 @@
 {
-  "name": "logirush",
+  "name": "sortify-express",
   "version": "1.0.0",
-  "description": "LogiRush: Warehouse Expedition Simulator — game edukasi simulasi logistik & ekspedisi dengan Multi-FSM (vanilla JS).",
+  "description": "Sortify Express: Warehouse Expedition Simulator — game edukasi simulasi logistik & ekspedisi dengan Multi-FSM (vanilla JS).",
   "type": "module",
   "scripts": {
     "start": "python3 -m http.server 5500",

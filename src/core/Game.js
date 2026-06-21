@@ -38,6 +38,7 @@ export class Game {
     this.gameFSM = null;
     this.lastResult = null;
     this.toasts = [];
+    this.modalPaused = false; // pop-up proses membekukan simulasi (waktu berhenti)
 
     this._wireToasts();
   }
@@ -72,6 +73,7 @@ export class Game {
     this.now = 0;
     this.ended = false;
     this.running = true;
+    this.modalPaused = false;
     this.selectedId = null;
 
     // objek dunia
@@ -107,6 +109,7 @@ export class Game {
 
   quitToMenu() {
     this.running = false;
+    this.modalPaused = false;
     this.audio.stopMusic();
     this.gameFSM.force('main_menu');
   }
@@ -116,6 +119,7 @@ export class Game {
     if (this.ended) return;
     this.ended = true;
     this.running = false;
+    this.modalPaused = false;
     this.audio.stopMusic();
 
     const snap = this.kpiSnapshot();
@@ -275,9 +279,31 @@ export class Game {
     }
   }
 
-  actDispatch(vehicleId) {
+  actDispatch(vehicleId, mode = 'auto') {
     const v = this.vehicles.find((x) => x.id === vehicleId);
-    if (v && v.dispatch()) this.audio.play('click');
+    if (v && v.dispatch(mode)) {
+      this.audio.play('click');
+      return true;
+    }
+    return false;
+  }
+
+  completeManualDispatch(vehicleId) {
+    const v = this.vehicles.find((x) => x.id === vehicleId);
+    if (v && v.completeManualDispatch()) {
+      this.audio.play('click');
+      return true;
+    }
+    return false;
+  }
+
+  continueManualDispatchAuto(vehicleId, progress = 0) {
+    const v = this.vehicles.find((x) => x.id === vehicleId);
+    if (v && v.continueAutoFromManual(progress)) {
+      this.audio.play('click');
+      return true;
+    }
+    return false;
   }
 
   // -------------------------------------------------------------- helper sim
@@ -302,6 +328,8 @@ export class Game {
   // -------------------------------------------------------------------- loop
   update(dt) {
     if (!this.isPlaying() || !this.running) return;
+    // pop-up proses sedang terbuka → bekukan seluruh simulasi & timer
+    if (this.modalPaused) return;
 
     this.now += dt;
     this.elapsed += dt;

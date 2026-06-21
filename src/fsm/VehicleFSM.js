@@ -2,6 +2,7 @@
 // VehicleFSM.js — FSM Kendaraan (GDD 7.3)
 // Idle → Waiting Load → Loading → Departing → Delivering → (Delayed) →
 // Arrived → Returning → Idle ; Maintenance bila kendaraan rusak.
+// Note: Loading state menunggu pemain untuk trigger dispatch (bukan auto-saat penuh).
 // ============================================================================
 
 import { FSM } from '../core/FSM.js';
@@ -37,9 +38,9 @@ export function createVehicleFSM(veh, game) {
 
     loading: {
       transitions: ['departing', 'idle'],
-      // menerima paket sampai penuh atau player menekan Dispatch
+      // menerima paket sampai player menekan Dispatch (tanpa auto-dispatch)
       onUpdate: (c, fsm) => {
-        if (veh.full()) veh.requestDispatch = true; // auto saat penuh
+        // hanya tunggu player untuk trigger dispatch via button/action
         if (veh.requestDispatch && veh.packages.length > 0) fsm.transition('departing');
       },
     },
@@ -59,6 +60,10 @@ export function createVehicleFSM(veh, game) {
     delivering: {
       transitions: ['delayed', 'arrived'],
       onUpdate: (c, fsm, dt) => {
+        if (veh.manualDispatch) {
+          veh.tripTimer = Math.max(0, veh.tripTime * (1 - veh.manualProgress));
+          return;
+        }
         veh.tripTimer -= dt;
         // peluang delay sekali di tengah perjalanan (rute berisiko / event)
         if (!veh.delayRolled && veh.tripTimer < veh.tripTime * 0.5) {

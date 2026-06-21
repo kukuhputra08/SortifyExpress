@@ -150,6 +150,18 @@ export class PlayerCharacter {
     return this.setWaypoint(stationId);
   }
 
+  /** Tempatkan operator langsung di station (dipakai pop-up proses). */
+  snapTo(stationId) {
+    const st = STATIONS[stationId];
+    if (!st) return false;
+    this.x = st.x;
+    this.y = st.y;
+    this.station = stationId;
+    this.clearWaypoint();
+    this.clearMoveInput();
+    return true;
+  }
+
   advanceMovement(dt) {
     const mag = Math.hypot(this.inputX, this.inputY);
     if (mag <= 0.08) return;

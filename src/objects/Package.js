@@ -60,7 +60,7 @@ export class Package {
       case 'packing': return 'packing';
       case 'quality_check': return 'qc';
       case 'ready_to_load': return 'loading';
-      default: return null; // loaded/shipping/final tidak dihitung
+      default: return null; // loaded/stored/shipping/final tidak dihitung
     }
   }
 
@@ -115,11 +115,13 @@ export class Package {
   onLoaded(vehicle) {
     this.vehicle = vehicle;
     this.fsm.transition('loaded');
+    // langsung simpan di kendaraan sambil menunggu dispatch
+    this.fsm.transition('stored');
   }
 
   /** Dipanggil VehicleFSM saat kendaraan berangkat. */
   onDeparted() {
-    if (this.state === 'loaded') this.fsm.transition('shipping');
+    if (this.state === 'stored') this.fsm.transition('shipping');
   }
 
   /** Dipanggil VehicleFSM saat tiba: tentukan on-time / late. */

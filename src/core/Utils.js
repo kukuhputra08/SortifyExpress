@@ -32,12 +32,12 @@ export function uid(prefix = 'id') {
   return `${prefix}_${_idCounter}`;
 }
 
-// Kode paket gaya resi: LR-AB1234
+// Kode paket gaya resi: SE-AB1234
 export function packageCode() {
   const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
   const a = letters[randInt(0, letters.length - 1)] + letters[randInt(0, letters.length - 1)];
   const n = randInt(1000, 9999);
-  return `LR-${a}${n}`;
+  return `SE-${a}${n}`;
 }
 
 export function formatTime(sec) {

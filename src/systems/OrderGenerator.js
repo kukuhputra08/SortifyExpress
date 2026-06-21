@@ -4,6 +4,7 @@
 // ============================================================================
 
 import { Package } from '../objects/Package.js';
+import { CONFIG } from '../data/config.js';
 import { randRange, pick, chance } from '../core/Utils.js';
 
 export class OrderGenerator {
@@ -12,12 +13,15 @@ export class OrderGenerator {
     this.timer = 0;
     this.next = 0;
     this.spawned = 0;
-    this._schedule();
+    this._schedule(true);
   }
 
-  _schedule() {
+  _schedule(first = false) {
     const [min, max] = this.game.level.spawnInterval;
-    this.next = randRange(min, max) * this.game.mods.spawnFactor;
+    // SPAWN_MULT melonggarkan tempo global; paket pertama diberi jeda lembut
+    // agar pemain sempat membaca situasi sebelum gudang ramai.
+    this.next = randRange(min, max) * this.game.mods.spawnFactor * CONFIG.SPAWN_MULT;
+    if (first) this.next += CONFIG.FIRST_SPAWN_DELAY;
     this.timer = 0;
   }
 
@@ -39,8 +43,8 @@ export class OrderGenerator {
   }
 
   update(dt) {
-    // berhenti spawn di 12 detik terakhir agar paket sempat diproses
-    if (this.game.timeLeft <= 12) return;
+    // berhenti spawn di detik terakhir agar paket sempat diproses
+    if (this.game.timeLeft <= CONFIG.SPAWN_STOP_AT) return;
 
     this.timer += dt;
     if (this.timer < this.next) return;

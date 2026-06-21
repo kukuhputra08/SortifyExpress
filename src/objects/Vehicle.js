@@ -26,6 +26,8 @@ export class Vehicle {
     this.delayTimer = 0;
     this.delayRolled = false;
     this.requestDispatch = false;
+    this.manualDispatch = false;
+    this.manualProgress = 0;
 
     this.fsm = createVehicleFSM(this, game);
   }
@@ -65,13 +67,33 @@ export class Vehicle {
     return { ok: true };
   }
 
-  /** Player menekan Dispatch. */
-  dispatch() {
+  /** Player menekan Dispatch. mode: auto | manual. */
+  dispatch(mode = 'auto') {
     if (this.fsm.is('loading') && this.packages.length > 0) {
+      this.manualDispatch = mode === 'manual';
+      this.manualProgress = 0;
       this.requestDispatch = true;
       return true;
     }
     return false;
+  }
+
+  /** Mode manual selesai saat pemain mencapai tujuan terakhir di peta. */
+  completeManualDispatch() {
+    if (!this.manualDispatch || !this.fsm.is('delivering')) return false;
+    this.manualProgress = 1;
+    this.tripTimer = 0;
+    this.manualDispatch = false;
+    return this.fsm.transition('arrived');
+  }
+
+  /** Kembali ke sistem otomatis dari mode manual, memakai sisa progress. */
+  continueAutoFromManual(progress = this.manualProgress) {
+    if (!this.manualDispatch) return false;
+    this.manualProgress = clamp(progress, 0, 0.95);
+    if (this.tripTime) this.tripTimer = Math.max(1, this.tripTime * (1 - this.manualProgress));
+    this.manualDispatch = false;
+    return true;
   }
 
   /** Hitung waktu tempuh = rute terjauh × faktor kendaraan × event × upgrade. */
@@ -103,6 +125,8 @@ export class Vehicle {
     this.tripTimer = 0;
     this.delayRolled = false;
     this.requestDispatch = false;
+    this.manualDispatch = false;
+    this.manualProgress = 0;
   }
 
   update(dt) { this.fsm.update(dt); }

@@ -32,4 +32,5 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('pointerdown', () => game.audio.resume(), { once: true });
 
 // akses debug di console
-window.LogiRush = game;
+window.SortifyExpress = game;
+window.LogiRush = game; // alias lama (kompatibilitas)

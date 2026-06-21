@@ -5,12 +5,13 @@
 import { iconEl } from '../ui/icons.js';
 
 const STEPS = [
-  { ic: 'inbound', t: 'Ambil & Scan', d: 'Gerakkan operator dengan WASD/arrow atau analog mobile ke Inbound, pilih paket ber-barcode, lalu scan.' },
-  { ic: 'sorting', t: 'Sortir', d: 'Dekati Sorting Line dan pilih jalur tujuan yang SAMA dengan hasil scan. Desktop bisa pakai angka 1-9.' },
-  { ic: 'pack', t: 'Packing', d: 'Dekati Packing Bench lalu tekan Aksi/E. Fragile butuh waktu lebih dan lebih aman saat gudang tidak overload.' },
-  { ic: 'qc', t: 'Quality Check', d: 'Pengecekan akhir otomatis. Paket lolos → siap dimuat, atau rusak bila apes.' },
-  { ic: 'load', t: 'Loading', d: 'Bawa operator ke Loading, lalu muat paket ke kendaraan sesuai kapasitas. Oversize wajib Truck.' },
-  { ic: 'dispatch', t: 'Dispatch', d: 'Berangkatkan kendaraan. Paket harus tiba sebelum deadline agar tepat waktu.' },
+  { ic: 'inbound', t: 'Pilih Paket', d: 'Klik paket ber-barcode di map (atau tekan Q untuk yang paling mendesak). Operator otomatis hadir di station yang tepat.' },
+  { ic: 'scan', t: 'Scan & Verifikasi', d: 'Pop-up proses terbuka & WAKTU BERHENTI. Cocokkan label resi paket dengan memilih kode yang sama dari manifest — tinggal klik, tanpa mengetik.' },
+  { ic: 'sorting', t: 'Sortir', d: 'Pilih jalur kota tujuan yang sesuai hasil scan. Salah jalur menurunkan akurasi. Desktop bisa pakai angka 1-9.' },
+  { ic: 'pack', t: 'Packing', d: 'Klik "Kemas Paket". Fragile butuh penanganan hati-hati dan lebih aman saat gudang tidak overload.' },
+  { ic: 'qc', t: 'Quality Check', d: 'Pengecekan akhir otomatis. Paket lolos → siap dimuat, atau rusak bila apes (terutama fragile saat gudang padat).' },
+  { ic: 'load', t: 'Loading', d: 'Pilih kendaraan yang kapasitas & jenisnya cocok. Oversize wajib Truck; express paling cepat lewat Motor/Van.' },
+  { ic: 'dispatch', t: 'Dispatch', d: 'Pilih kirim otomatis atau antar manual lewat peta wilayah. Paket harus tiba sebelum deadline agar dihitung tepat waktu.' },
 ];
 
 export class TutorialScene {
@@ -38,14 +39,14 @@ export class TutorialScene {
         <span></span>
       </header>
 
-      <p class="tut-intro">Kamu adalah <b>operator gudang ekspedisi</b>. Gerakkan karakter di map gudang, baca barcode paket, dekati station yang benar, jaga kapasitas gudang, dan kirim tepat waktu untuk KPI tinggi.</p>
+      <p class="tut-intro">Kamu adalah <b>operator gudang ekspedisi Sortify Express</b>. Setiap paket diproses <b>langkah demi langkah</b>: tiap tahap membuka <b>pop-up proses yang menghentikan waktu</b>, menjelaskan apa yang terjadi, dan memberi pilihan untuk diklik. Pahami prosesnya, jaga kapasitas gudang, dan kirim tepat waktu untuk KPI tinggi.</p>
 
       <div class="tut-controls">
-        <span><b>WASD / Arrow</b> gerak</span>
-        <span><b>E / Space</b> aksi</span>
-        <span><b>Q</b> paket urgent</span>
-        <span><b>R</b> dispatch</span>
-        <span><b>Mobile</b> analog + tombol aksi</span>
+        <span><b>Klik / Q</b> ambil paket</span>
+        <span><b>E / Space</b> buka proses</span>
+        <span><b>1-9</b> pilih jalur sortir</span>
+        <span><b>R</b> dispatch otomatis cepat</span>
+        <span><b>Esc</b> tutup pop-up / jeda</span>
       </div>
 
       <div class="tut-flow">${steps}</div>
@@ -53,9 +54,9 @@ export class TutorialScene {
       <div class="tut-legend">
         <h3>Jenis Paket</h3>
         <div class="legend-row">
-          <span class="pill" style="--c:#4f8cff">${iconEl('box')} Reguler · 90s</span>
-          <span class="pill" style="--c:#ff7a45">${iconEl('bolt')} Express · 45s (prioritas!)</span>
-          <span class="pill" style="--c:#ff4d6d">${iconEl('glass')} Fragile · 120s (hati-hati)</span>
+          <span class="pill" style="--c:#4ea7a0">${iconEl('box')} Reguler · 90s</span>
+          <span class="pill" style="--c:#e07a3c">${iconEl('bolt')} Express · 45s (prioritas!)</span>
+          <span class="pill" style="--c:#cc5340">${iconEl('glass')} Fragile · 120s (hati-hati)</span>
         </div>
         <h3>Kendaraan</h3>
         <div class="legend-row">

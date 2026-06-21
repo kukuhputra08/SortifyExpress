@@ -34,9 +34,9 @@ export class MainMenuScene {
       <div class="menu-hero">
         <div class="logo">${LOGO_SVG}</div>
         <div class="menu-title">
-          <h1>LogiRush</h1>
+          <h1>Sortify Express</h1>
           <p class="subtitle">Warehouse Expedition Simulator</p>
-          <p class="tagline">Scan · Sortir · Packing · Loading · Dispatch — kelola gudang ekspedisi, kejar deadline, raih KPI terbaik!</p>
+          <p class="tagline">Scan · Sortir · Packing · Loading · Dispatch — kelola gudang ekspedisi langkah demi langkah, pahami tiap proses, kejar deadline & raih KPI terbaik!</p>
         </div>
       </div>
 

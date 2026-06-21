@@ -9,6 +9,14 @@ export const CONFIG = {
   TICK_RATE: 60, // target FPS update simulasi
   RENDER_HZ: 15, // frekuensi re-render panel dinamis (hemat DOM)
 
+  // -- Tempo spawn paket ---------------------------------------------------
+  // Pengali global jeda kemunculan paket. >1 = box muncul lebih santai.
+  // Sengaja lembut: pop-up proses sudah membekukan waktu di tiap langkah,
+  // jadi tempo terasa jauh lebih tenang tanpa membuat target mustahil.
+  SPAWN_MULT: 1.15,
+  FIRST_SPAWN_DELAY: 1.0, // jeda lembut sebelum paket pertama muncul (detik)
+  SPAWN_STOP_AT: 7,       // berhenti spawn saat sisa waktu <= ini (detik)
+
   // -- Skor (GDD 6.1) ------------------------------------------------------
   SCORE: {
     SCAN_CORRECT: 50,

@@ -90,10 +90,13 @@ function autoPlay() {
     }
   }
 
-  // dispatch kendaraan yang sudah memuat ≥1 paket
+  // dispatch kendaraan yang sudah memuat ≥1 paket (dengan probabilitas agar tidak instant)
   for (const v of game.vehicles) {
-    if (v.fsm.is('loading') && v.packages.length > 0 && (v.full() || Math.random() < 0.25)) {
-      game.actDispatch(v.id);
+    if (v.fsm.is('loading') && v.packages.length > 0) {
+      // dispatch jika penuh atau probabilitas 25% setiap frame
+      if (v.full() || Math.random() < 0.25) {
+        game.actDispatch(v.id);
+      }
     }
   }
 }
